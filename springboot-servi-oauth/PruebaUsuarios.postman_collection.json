@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "d1cb9410-75a9-4784-9cb1-f903b634587d",
+		"name": "PruebaUsuarios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8cb3c2c7-7dab-45f2-ad12-cf05713b7761",
+						"exec": [
+							"if(responseBody){\r",
+							"var data = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"token\", \"bearer \"+data.access_token);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "frontendapp",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "cpalacio",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9100/oauth/token",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"oauth",
+						"token"
+					]
+				},
+				"description": "Login a la aplicación"
+			},
+			"response": []
+		},
+		{
+			"name": "CrearPersona",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"identificacion\": \"2\",\r\n    \"nombres\": \"Cristian\",\r\n    \"apellidos\": \"Palacio\",\r\n    \"email\": \"crpalacio52@gmail.com\",\r\n    \"tarjeta\": {\r\n        \"fechaDeVencimiento\": \"04/2027\",\r\n        \"numeroDeTarjeta\": \"4304358228766553\",\r\n        \"cvv\": \"752\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9100/Persona/crear",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"Persona",
+						"crear"
+					]
+				},
+				"description": "Permite crear la persona"
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerPersona por Identificacion",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9100/Persona/ver/1",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"Persona",
+						"ver",
+						"1"
+					]
+				},
+				"description": "Permite obtener la persona por identificacion"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Persona",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"identificacion\": \"2\",\r\n    \"nombres\": \"Andres\",\r\n    \"apellidos\": \"Restrepo\",\r\n    \"email\": \"crpalacio52@gmail.com\",\r\n    \"tarjeta\": {\r\n        \"fechaDeVencimiento\": \"01/2030\",\r\n        \"numeroDeTarjeta\": \"4304358228766553\",\r\n        \"cvv\": \"456\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9100/Persona/actualizar",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"Persona",
+						"actualizar"
+					]
+				},
+				"description": "Permite actualizar los datos de la persona"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
