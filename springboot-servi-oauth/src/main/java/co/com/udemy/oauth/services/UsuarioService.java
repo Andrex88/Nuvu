@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import co.com.udemy.oauth.entity.Usuario;
-import co.com.udemy.oauth.usuario.UsuarioDao;
+import co.com.udemy.oauth.repository.UsuarioDao;
 
 @Service
 public class UsuarioService implements IUsuarioServices, UserDetailsService {
@@ -36,7 +36,6 @@ public class UsuarioService implements IUsuarioServices, UserDetailsService {
 
 		List<GrantedAuthority> authorities = usuario.getRoles().stream()
 				.map(rol -> new SimpleGrantedAuthority(rol.getNombre()))
-//				.peek(authority -> log.info(authority.getAuthority()))
 				.collect(Collectors.toList());
 		log.info("Usuario autenticado:" + username);
 		return new User(username, usuario.getPassword(), usuario.getEnabled(), true, true, true, authorities);
